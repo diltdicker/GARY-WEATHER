@@ -18,5 +18,6 @@ public class lab6 extends AppCompatActivity {
         myWebView.loadUrl("file:///android_asset/lab5_solution.html");
         WebSettings ws = myWebView.getSettings();
         ws.setJavaScriptEnabled(true);
+        ws.setDomStorageEnabled(true);
     }
 }
