@@ -13,11 +13,14 @@ public class lab6 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lab6);
 
-        WebView myWebView = findViewById(R.id.webView);
+        WebView myWebView = findViewById(R.id.lab5WebView);
         myWebView.setWebViewClient(new WebViewClient());
-        myWebView.loadUrl("file:///android_asset/lab5_solution.html");
+
         WebSettings ws = myWebView.getSettings();
         ws.setJavaScriptEnabled(true);
+        ws.setAllowUniversalAccessFromFileURLs(true);
         ws.setDomStorageEnabled(true);
+
+        myWebView.loadUrl("file:///android_asset/www/lab5_solution.html");
     }
 }
