@@ -2,6 +2,7 @@ package ser421.asu.edu.lab6;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -15,6 +16,7 @@ public class lab6 extends AppCompatActivity {
 
         WebView myWebView = findViewById(R.id.lab5WebView);
         myWebView.setWebViewClient(new WebViewClient());
+        myWebView.setWebChromeClient(new WebChromeClient());
 
         WebSettings ws = myWebView.getSettings();
         ws.setJavaScriptEnabled(true);
