@@ -25,8 +25,8 @@
     </tbody></table>
 <div>
     Please select a third city :
-    <select onchange="populateThirdCity(this)">
-        <option value="new york">New York</option>
+    <select id="citySelect" onchange="populateThirdCity(this)">
+        <option value="Brooklyn">New York</option>
         <option value="frankfurt">Frankfurt</option>
         <option value="sydney">Sydney</option>
         <option value="new delhi">New Delhi</option>
@@ -34,7 +34,7 @@
     </select>
 </div>
 <div>
-    <button onclick="refreshData()">Refresh</button>
+    <button id="refreshBttn" onclick="refreshData()">Refresh</button>
 </div>
 <div>
     <span id="lineOne"></span><br>
@@ -48,10 +48,29 @@
     //==========================================================================
     //Lab 6 – Create an event listener for when the info button is clicked
     //        and grab the button ID to pass in the city name to the android app
-    document.addEventListener("click", function (eventID) {
-        //Console log is a place holder until I figure out the android
-        console.log("Button ID is: ", eventID.target.id);
-    });
+    var refreshBttn = document.querySelector("#refreshBttn");
+
+        document.addEventListener("click", function (eventID) {
+            /*Make sure we don't do anything with the Refresh and select buttons,
+              only the info buttons */
+            if(eventID.target.id.startsWith("info")) {
+                let cityNameStr;
+                //Console log is a place holder until I figure out the android
+                console.log("Button ID is: ", eventID.target.id);
+                if(eventID.target.id.startsWith("infoFirst")) {
+                    cityNameStr = "Tucson-AZ"
+                }
+                else if(eventID.target.id.startsWith("infoSecond")) {
+                    cityNameStr = "Phoenix-AZ"
+                }
+                else if(eventID.target.id.startsWith("infoThird")) {
+                    cityNameStr = document.querySelector("#citySelect").value;
+                }
+
+                androidInfo.performClick(cityNameStr);
+            }
+        });
+
 
 
     //==========================================================================
@@ -175,7 +194,7 @@
         //Lab 6 – Add string to each initTable call to pass in a marker to change
         //        the button to the correct city name
 		function refreshData() {
-			initTable("http://api.openweathermap.org/data/2.5/weather?q=London&appid=f8067effab2859a4ac1d4f5637dec42b","firstcitynewrow", "infoFirstNew");
+			initTable("http://api.openweathermap.org/data/2.5/weather?q=Tucson&appid=f8067effab2859a4ac1d4f5637dec42b","firstcitynewrow", "infoFirstNew");
             // initTable("http://localhost:8081?cityName=London","firstcitynewrow");
 
 			initTable("http://api.openweathermap.org/data/2.5/weather?q=Phoenix&appid=f8067effab2859a4ac1d4f5637dec42b", "secondcitynewrow", "infoSecondNew");
@@ -382,8 +401,8 @@
         //Lab 6 – Add string to each initTable call to pass in a marker to change
         //        the button to the correct city name
 		if (localStorage.getItem("firstcity") === null) {
-			initTable("http://api.openweathermap.org/data/2.5/weather?q=London&appid=f8067effab2859a4ac1d4f5637dec42b","firstcity", "infoFirst");
-			// initTable("http://localhost:8081?cityName=London","firstcity");
+			initTable("http://api.openweathermap.org/data/2.5/weather?q=Tucson&appid=f8067effab2859a4ac1d4f5637dec42b","firstcity", "infoFirst");
+			// initTable("http://localhost:8081?cityName=Tuscon","firstcity");
 		} else {
 		    console.log('fetching from localstorage');
 			var firstCityData = localStorage.getItem("firstcity").split("|");
