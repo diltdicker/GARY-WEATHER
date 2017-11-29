@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Lab6-Part2</string>
+    <string name="choiceURL">file:///android_asset/choice.html</string>
+    <string name="weatherURL">file:///android_asset/weather.html</string>
+    <string name="weather2URL">file:///android_asset/menu.html</string>
+</resources>
