@@ -12,7 +12,7 @@
 			}
 		</style>
 </head>
-<body>
+<body onload="loadSelection();">
 <table id="weatherTable">
     <tbody><tr>
         <th>City Name</th>
@@ -25,13 +25,54 @@
     </tbody></table>
 <div>
     Please select a third city :
-    <select id="citySelect" onchange="populateThirdCity(this)">
-        <option value="Brooklyn">New York</option>
-        <option value="frankfurt">Frankfurt</option>
-        <option value="sydney">Sydney</option>
-        <option value="new delhi">New Delhi</option>
-        <option value="shanghai">Shanghai</option>
+    <select onchange="populateThirdCity(this)" id="cityList">
+        <option value="Mesa-AZ">Mesa</option>
+        <option value="Tucson-AZ">Tucson</option>
+        <option value="Miami-FL">Miami</option>
+        <option value="Cheyenne-WY">Cheyenne</option>
+        <option value="Mesa-AZ">Mesa</option>
     </select>
+    <div id="test">
+    </div>
+    <script>
+        // grab the cities list
+        //var list = ["Mesa", "Tucson", "Miami", "Cheyenne", "Nome", "Dallas", "Anaheim", "Tallahassee", "Austin", "Juneau"];
+        function grabCityList() {
+            var sel = document.getElementById("cityList");
+            var arr = new Array();
+            for (var i = 0; i < sel.children.length; i++) {
+                arr.push(sel.children[i].value);
+            }
+            var current = sel.value;
+            var index = arr.indexOf(current);
+            arr.splice(index, 1);
+            var JSONtxt = '{"cities" : [ ';
+            for (var i = 0; i < arr.length; i++) {
+                JSONtxt += '{"name":"' + arr[i] +'"}';
+                if (i != arr.length - 1) {
+                    JSONtxt += ',';
+                }
+            }
+            JSONtxt += ']}, {"selected": "' + current + '"}';
+            //document.getElementById("test").innerHTML = JSONtxt;
+            var selectedOption = document.getElementById('cityList').value;
+            Android.updateCurrent(selectedOption);
+        }
+        // grab the selected
+    </script>
+    <script>
+        function loadSelection() {
+            var tmp2 = Android.grabCityList("tmp");
+            Android.test("yo");
+            //document.getElementById("test").innerHTML = tmp2;
+            var listCitiesStr = tmp2.split(',');
+            var htmlStr = '';
+            for (var i = 0; i < listCitiesStr.length; i++) {
+                htmlStr += '<option value="'+ listCitiesStr[i] + '">' + listCitiesStr[i] + '</option>';
+            }
+            document.getElementById('cityList').innerHTML = htmlStr;
+        }
+    </script>
 </div>
 <div>
     <button id="refreshBttn" onclick="refreshData()">Refresh</button>
@@ -58,13 +99,13 @@
                 //Console log is a place holder until I figure out the android
                 console.log("Button ID is: ", eventID.target.id);
                 if(eventID.target.id.startsWith("infoFirst")) {
-                    cityNameStr = "Tucson-AZ"
+                    cityNameStr = "Seattle-WA"
                 }
                 else if(eventID.target.id.startsWith("infoSecond")) {
                     cityNameStr = "Phoenix-AZ"
                 }
                 else if(eventID.target.id.startsWith("infoThird")) {
-                    cityNameStr = document.querySelector("#citySelect").value;
+                    cityNameStr = document.querySelector("#cityList").value;
                 }
 
                 androidInfo.performClick(cityNameStr);
@@ -188,13 +229,15 @@
 			if (document.getElementById('thirdcitynewrow') != null) {
 				document.getElementById('thirdcitynewrow').parentNode.removeChild(document.getElementById('thirdcitynewrow'));
 			}
-			initTable("http://api.openweathermap.org/data/2.5/weather?q="+that.value+"&appid=f8067effab2859a4ac1d4f5637dec42b", "thirdcity", "infoThird");
+			let thirdCityName = that.value.substring(0, that.value.length -3);
+			console.log("that.value: ", thirdCityName);
+			initTable("http://api.openweathermap.org/data/2.5/weather?q="+thirdCityName+"&appid=f8067effab2859a4ac1d4f5637dec42b", "thirdcity", "infoThird");
 		}
         //==========================================================================
         //Lab 6 – Add string to each initTable call to pass in a marker to change
         //        the button to the correct city name
 		function refreshData() {
-			initTable("http://api.openweathermap.org/data/2.5/weather?q=Tucson&appid=f8067effab2859a4ac1d4f5637dec42b","firstcitynewrow", "infoFirstNew");
+			initTable("http://api.openweathermap.org/data/2.5/weather?q=Seattle&appid=f8067effab2859a4ac1d4f5637dec42b","firstcitynewrow", "infoFirstNew");
             // initTable("http://localhost:8081?cityName=London","firstcitynewrow");
 
 			initTable("http://api.openweathermap.org/data/2.5/weather?q=Phoenix&appid=f8067effab2859a4ac1d4f5637dec42b", "secondcitynewrow", "infoSecondNew");
@@ -205,7 +248,9 @@
             //        ID is being passed into that cell also
 			if (document.getElementById('thirdcity') !== null) {
                 var thirdCityAndID = document.getElementById('thirdcity').cells[0].innerHTML;
-                var thirdCityStr = thirdCityAndID.substring(thirdCityAndID.lastIndexOf(">")+1);
+
+                var thirdCityStr = thirdCityAndID.substring(thirdCityAndID.lastIndexOf(">")+1, thirdCityAndID.length
+                    -3);
 			    console.log("Third Row Name: ", thirdCityStr);
 				initTable("http://api.openweathermap.org/data/2.5/weather?q="+thirdCityStr+"&appid=f8067effab2859a4ac1d4f5637dec42b", "thirdcitynewrow", "infoThirdNew");
 				// initTable("http://localhost:8081?cityName=" + document.getElementById('thirdcity').cells[0].innerHTML, "thirdcitynewrow");
@@ -401,8 +446,8 @@
         //Lab 6 – Add string to each initTable call to pass in a marker to change
         //        the button to the correct city name
 		if (localStorage.getItem("firstcity") === null) {
-			initTable("http://api.openweathermap.org/data/2.5/weather?q=Tucson&appid=f8067effab2859a4ac1d4f5637dec42b","firstcity", "infoFirst");
-			// initTable("http://localhost:8081?cityName=Tuscon","firstcity");
+			initTable("http://api.openweathermap.org/data/2.5/weather?q=Seattle&appid=f8067effab2859a4ac1d4f5637dec42b","firstcity", "infoFirst");
+			// initTable("http://localhost:8081?cityName=Seattle","firstcity");
 		} else {
 		    console.log('fetching from localstorage');
 			var firstCityData = localStorage.getItem("firstcity").split("|");
