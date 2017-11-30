@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonUpdateWeather;
     static String current;
     static String selectionChoice="FINISH";
-    static JSONArray selectedCities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +39,9 @@ public class MainActivity extends AppCompatActivity {
         firstview.setWebContentsDebuggingEnabled(true);
         WebSettings webSettings = firstview.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        firstview.loadUrl(getString(R.string.choiceURL));
+
         firstview.addJavascriptInterface(new JavaScriptInterface(this.getApplicationContext()), "Android");
+        firstview.loadUrl(getString(R.string.choiceURL));
         selectionChoice = "NewYork";
         buttonChange.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,13 +108,8 @@ class JavaScriptInterface {
         Log.d("LogName", text);
     }
 
-    public void updateCities(String citiesJSON) {
-        try {
-            JSONObject cityObj = new JSONObject(citiesJSON);
-            MainActivity.selectedCities = cityObj.getJSONArray("cities");
-
-        } catch (org.json.JSONException e) {
-            Log.d("LogName", "JSON Error");
-        }
+    @JavascriptInterface
+    public String grabCityList(String tmp) {
+        return WeatherActivity.cityList.toString();
     }
 }

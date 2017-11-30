@@ -19,12 +19,17 @@ import android.webkit.WebViewClient;
 public class WeatherActivity extends AppCompatActivity {
 
     private WebView secondView;
+    static String[] cityList = new String[5];
 
     @Override
     protected void onCreate(Bundle savedInstanceSate) {
         super.onCreate(savedInstanceSate);
         setContentView(R.layout.activity_weather);
-
+        cityList[0] = "1";
+        cityList[1] = "2";
+        cityList[2] = "3";
+        cityList[3] = "4";
+        cityList[4] = "5";
         String name = getIntent().getStringExtra("selection");
 
         secondView = (WebView) findViewById(R.id.weatherView);
@@ -35,8 +40,8 @@ public class WeatherActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setAllowUniversalAccessFromFileURLs(true);
-        secondView.loadUrl(getString(R.string.weather2URL));
         secondView.addJavascriptInterface(new JavaScriptInterface(this.getApplicationContext()), "Android");
+        secondView.loadUrl(getString(R.string.weather2URL));
         Intent intent = new Intent();
         // These last 2 are to send values back to the original activity
         intent.putExtra("textToMain", "value_here");
