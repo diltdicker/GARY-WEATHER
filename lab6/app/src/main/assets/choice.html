@@ -3,11 +3,11 @@
 <body>
 <div>
     <select id="cities" multiple>
-        <option>Phoenix</option>
-        <option>Tuscon</option>
-        <option>Miami</option>
-        <option>Cheyenne</option>
-        <option>Nome</option>
+        <option selected="true">Mesa</option>
+        <option selected="true">Tucson</option>
+        <option selected="true">Miami</option>
+        <option selected="true">Cheyenne</option>
+        <option selected="true">Nome</option>
         <option>Dallas</option>
         <option>Anaheim</option>
         <option>Tallahassee</option>
@@ -16,7 +16,7 @@
     </select>
 </div>
 <div id="test">
-    Testing
+
 </div>
 <script>
         function grabSelected() {
@@ -39,12 +39,13 @@
             document.getElementById('test').innerHTML =list.toString();//vals;// list.length;//"test sucessful";
             return list.toString();
         }
+        grabSelected();
         Android.test("help1");
 </script>
 <script>
         function populateList() {
             /*var jsonStr;
-            var list = ["Phoenix", "Tuscon", "Miami", "Cheyenne", "Nome", "Dallas", "Anaheim", "Tallahassee", "Austin", "Juneau"];
+            var list = ["Mesa", "Tuscon", "Miami", "Cheyenne", "Nome", "Dallas", "Anaheim", "Tallahassee", "Austin", "Juneau"];
             var jsonData;
             var htmlData = "";
             for (var i = 0; i < 10; i++){

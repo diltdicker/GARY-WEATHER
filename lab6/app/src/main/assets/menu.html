@@ -17,7 +17,7 @@
     <tbody><tr>
         <th>City Name</th>
         <th>Timestamp<br>(yyyy:mm:dd:hh:mm:ss)</th>
-        <th>Temperature<br>in �C</th>
+        <th>Temperature<br>in C</th>
         <th>Humidity<br>in %</th>
         <th>Wind Speed<br>in miles per hour</th>
         <th>Cloudiness<br>in %</th>
@@ -26,16 +26,17 @@
 <div>
     Please select a third city :
     <select onchange="populateThirdCity(this)" id="cityList">
-        <option value="Phoenix">Phoenix</option>
-        <option value="frankfurt">Frankfurt</option>
-        <option value="sydney">Sydney</option>
-        <option value="new delhi">New Delhi</option>
-        <option value="shanghai">Shanghai</option>
+        <option value="Mesa">Mesa</option>
+        <option value="Tucson">Tucson</option>
+        <option value="Miami">Miami</option>
+        <option value="Cheyenne">Cheyenne</option>
+        <option value="Mesa">Mesa</option>
     </select>
     <div id="test">
     </div>
     <script>
         // grab the cities list
+        //var list = ["Mesa", "Tuscon", "Miami", "Cheyenne", "Nome", "Dallas", "Anaheim", "Tallahassee", "Austin", "Juneau"];
         function grabCityList() {
             var sel = document.getElementById("cityList");
             var arr = new Array();
@@ -53,7 +54,9 @@
                 }
             }
             JSONtxt += ']}, {"selected": "' + current + '"}';
-            document.getElementById("test").innerHTML = JSONtxt;
+            //document.getElementById("test").innerHTML = JSONtxt;
+            var selectedOption = document.getElementById('cityList').value;
+            Android.updateCurrent(selectedOption);
         }
         // grab the selected
     </script>
@@ -61,7 +64,13 @@
         function loadSelection() {
             var tmp2 = Android.grabCityList("tmp");
             Android.test("yo");
-            document.getElementById("test").innerHTML = tmp2;
+            //document.getElementById("test").innerHTML = tmp2;
+            var listCitiesStr = tmp2.split(',');
+            var htmlStr = '';
+            for (var i = 0; i < listCitiesStr.length; i++) {
+                htmlStr += '<option value="'+ listCitiesStr[i] + '">' + listCitiesStr[i] + '</option>';
+            }
+            document.getElementById('cityList').innerHTML = htmlStr;
         }
     </script>
 </div>

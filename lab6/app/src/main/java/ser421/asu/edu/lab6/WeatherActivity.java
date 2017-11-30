@@ -30,8 +30,8 @@ public class WeatherActivity extends AppCompatActivity {
         cityList[2] = "3";
         cityList[3] = "4";
         cityList[4] = "5";
-        String name = getIntent().getStringExtra("selection");
-
+        String listOfCities = getIntent().getStringExtra("selection");
+        cityList = listOfCities.split(",");
         secondView = (WebView) findViewById(R.id.weatherView);
         secondView.setWebViewClient(new WebViewClient());
         secondView.setWebChromeClient(new WebChromeClient());
@@ -48,12 +48,12 @@ public class WeatherActivity extends AppCompatActivity {
         setResult(RESULT_OK, intent);
 
         Log.d("LogName", "Race condition Weather");
-        if (name != null) {
+        /*if (listOfCities != null) {
             // closes this activity out before it shows up on the user's screen
             // evaluate JS
 
             finish();
-        }
+        }*/
     }
 
     protected void insertCityValues (WebView view, String JSONList) {
