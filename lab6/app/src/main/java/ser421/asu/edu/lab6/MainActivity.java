@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
     private WebView firstview;
     private Button buttonChange;
     private Button buttonUpdateWeather;
-    static String current = "Mesa";
+    static String current = "Mesa-AZ";
     //var list = ["Mesa", "Tuscon", "Miami", "Cheyenne", "Nome", "Dallas", "Anaheim", "Tallahassee", "Austin", "Juneau"];
-    static String selectionChoice="Mesa,Tuscon,Miami,Cheyenne,Nome";
+    static String selectionChoice="Mesa-AZ,Tuscon-AZ,Miami-FL,Cheyenne-WA,Nome-AK";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
