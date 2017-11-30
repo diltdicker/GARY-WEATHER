@@ -1,0 +1,64 @@
+<!DOCTYPE>
+<html>
+<body>
+<div>
+    <select id="cities" multiple>
+        <option>Phoenix</option>
+        <option>Tuscon</option>
+        <option>Miami</option>
+        <option>Cheyenne</option>
+        <option>Nome</option>
+        <option>Dallas</option>
+        <option>Anaheim</option>
+        <option>Tallahassee</option>
+        <option>Austin</option>
+        <option>Juneau</option>
+    </select>
+</div>
+<div id="test">
+    Testing
+</div>
+<script>
+        function grabSelected() {
+            var tmp = document.getElementById("cities").children;
+            var list = new Array();
+            for (var i = 0; i < tmp.length; i++) {
+                if (tmp[i].selected == true) {
+                    list.push(tmp[i].value);
+                }
+            }
+            var vals = '{"cities":[';
+            for (var k = 0; k < list.length; k++) {
+                vals += '{"name":"'+list[k]+'"}';
+                if (k != list.length - 1) {
+                    vals += ',';
+                }
+            }
+            vals += ']}';
+            //vals = '{"cities":"types"}';
+            document.getElementById('test').innerHTML =list.toString();//vals;// list.length;//"test sucessful";
+            return list.toString();
+        }
+</script>
+<script>
+        function populateList() {
+            /*var jsonStr;
+            var list = ["Phoenix", "Tuscon", "Miami", "Cheyenne", "Nome", "Dallas", "Anaheim", "Tallahassee", "Austin", "Juneau"];
+            var jsonData;
+            var htmlData = "";
+            for (var i = 0; i < 10; i++){
+                //htmlData += '<option>test</option>';
+                htmlData += '<option id="' + list[i] + '" value="' + list[i] + '">' + list[i] + '</option>';
+            }
+            document.getElementById("cities").innerHTML = htmlData;
+            */
+            document.getElementById("test").innerHTML = "gofers";
+        }
+</script>
+<script>
+function testing() {
+    document.getElementById("test").innerHTML = 'Rokae';
+}
+</script>
+</body>
+</html>
