@@ -50,19 +50,13 @@ public class WeatherActivity extends AppCompatActivity {
         setResult(RESULT_OK, intent);
 
         Log.d("LogName", "Race condition Weather");
-        /*if (listOfCities != null) {
-            // closes this activity out before it shows up on the user's screen
-            // evaluate JS
 
-            finish();
-        }*/
 
         //So we're able to use the JS info buttons.  Once button is clicked
         // create an intent and new webview to send data to city-data
         secondView.addJavascriptInterface(new Object() {
             @JavascriptInterface
             public void performClick(String cityName) {
-                //Toast.makeText(lab6.this, cityName, Toast.LENGTH_LONG).show();
                 Intent cityDataIntent = new Intent(WeatherActivity.this, cityDataActivity.class);
                 cityDataIntent.putExtra("cityInfoStr", cityName);
                 startActivity(cityDataIntent);
